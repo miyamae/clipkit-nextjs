@@ -20,11 +20,12 @@ export default function ShowArticle(props: any) {
   );
 }
 
-export async function getServerSideProps(context) {
+export async function getStaticProps(context: any) {
   const clipkit = new ClipkitClient();
   const article = await clipkit.getArticle(context.params.id);
   const items = await clipkit.get({ url: article._links.items.href });
   return {
     props: { article, items },
+    revalidate: 10,
   };
 }
