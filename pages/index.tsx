@@ -20,10 +20,11 @@ export default function Home(props: any) {
   );
 }
 
-export async function getServerSideProps() {
+export async function getStaticProps(context: any) {
   const clipkit = new ClipkitClient();
   const articles = await clipkit.getArticles();
   return {
     props: { articles },
+    revalidate: 10,
   };
 }
