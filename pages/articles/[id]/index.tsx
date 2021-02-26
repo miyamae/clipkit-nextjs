@@ -12,7 +12,7 @@ export default function ShowArticle(props: any) {
         <h1>{props.article.title}</h1>
         <ul>
           {props.items.map((item: any) => {
-            return <li>{item.body}</li>;
+            return <li key={item.id}>{item.body}</li>;
           })}
         </ul>
       </article>
@@ -28,4 +28,13 @@ export async function getStaticProps(context: any) {
     props: { article, items },
     revalidate: 10,
   };
+}
+
+export async function getStaticPaths() {
+  const clipkit = new ClipkitClient();
+  const articles = await clipkit.getArticles();
+  const paths = articles.map((article: any) => ({
+    params: { id: article.id.toString() },
+  }));
+  return { paths, fallback: false };
 }

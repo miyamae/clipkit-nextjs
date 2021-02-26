@@ -9,7 +9,7 @@ export default function Home(props: any) {
         <ul>
           {props.articles.map((article: any) => {
             return (
-              <li>
+              <li key={article.id}>
                 <Link href={`articles/${article.id}`}>{article.title}</Link>
               </li>
             );
